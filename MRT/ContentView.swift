@@ -20,7 +20,7 @@ struct ContentView: View {
                     HomeView()
                         .tabItem {
                             Image(systemName: "house")
-                            Text("Home")
+                            Text("Beranda")
                                 
                         }
                         .tag(0)
@@ -28,7 +28,7 @@ struct ContentView: View {
                     HistoryView()
                         .tabItem {
                             Image(systemName: "clock")
-                            Text("History")
+                            Text("Riwayat")
                             
                                   
                         }
@@ -37,7 +37,7 @@ struct ContentView: View {
                     ProfileView()
                         .tabItem {
                             Image(systemName: "person")
-                            Text("Profile")
+                            Text("Profil")
                         }
                         .tag(2)
         }
