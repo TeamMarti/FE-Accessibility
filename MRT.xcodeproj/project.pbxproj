@@ -16,6 +16,9 @@
 		35D5E6B82A65860D002E4F13 /* HistoryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35D5E6B72A65860D002E4F13 /* HistoryView.swift */; };
 		35D5E6BA2A658626002E4F13 /* ProfileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35D5E6B92A658626002E4F13 /* ProfileView.swift */; };
 		35D5E6BC2A65869B002E4F13 /* HomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35D5E6BB2A65869B002E4F13 /* HomeView.swift */; };
+		D6C5A86F2A692BB900832EA9 /* AlarmManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6C5A86E2A692BB900832EA9 /* AlarmManager.swift */; };
+		D6C5A8712A692BC300832EA9 /* DetectorManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6C5A8702A692BC300832EA9 /* DetectorManager.swift */; };
+		D6C5A8732A692EA300832EA9 /* GateData.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6C5A8722A692EA300832EA9 /* GateData.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -30,6 +33,9 @@
 		35D5E6B72A65860D002E4F13 /* HistoryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HistoryView.swift; sourceTree = "<group>"; };
 		35D5E6B92A658626002E4F13 /* ProfileView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileView.swift; sourceTree = "<group>"; };
 		35D5E6BB2A65869B002E4F13 /* HomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeView.swift; sourceTree = "<group>"; };
+		D6C5A86E2A692BB900832EA9 /* AlarmManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlarmManager.swift; sourceTree = "<group>"; };
+		D6C5A8702A692BC300832EA9 /* DetectorManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetectorManager.swift; sourceTree = "<group>"; };
+		D6C5A8722A692EA300832EA9 /* GateData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GateData.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -70,8 +76,11 @@
 				3519BABD2A61424200F47BAA /* MRTApp.swift */,
 				3519BABF2A61424200F47BAA /* ContentView.swift */,
 				3519BACB2A6146EA00F47BAA /* BottomSheetView.swift */,
+				D6C5A86E2A692BB900832EA9 /* AlarmManager.swift */,
+				D6C5A8702A692BC300832EA9 /* DetectorManager.swift */,
 				3519BAC12A61424300F47BAA /* Assets.xcassets */,
 				3519BAC32A61424300F47BAA /* Preview Content */,
+				D6C5A8722A692EA300832EA9 /* GateData.swift */,
 			);
 			path = MRT;
 			sourceTree = "<group>";
@@ -154,11 +163,14 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D6C5A8732A692EA300832EA9 /* GateData.swift in Sources */,
 				3519BAC02A61424200F47BAA /* ContentView.swift in Sources */,
 				35D5E6B82A65860D002E4F13 /* HistoryView.swift in Sources */,
 				35D5E69E2A62FD69002E4F13 /* ShortCut.swift in Sources */,
 				3519BABE2A61424200F47BAA /* MRTApp.swift in Sources */,
 				35D5E6BC2A65869B002E4F13 /* HomeView.swift in Sources */,
+				D6C5A8712A692BC300832EA9 /* DetectorManager.swift in Sources */,
+				D6C5A86F2A692BB900832EA9 /* AlarmManager.swift in Sources */,
 				35D5E6BA2A658626002E4F13 /* ProfileView.swift in Sources */,
 				3519BACC2A6146EA00F47BAA /* BottomSheetView.swift in Sources */,
 			);
@@ -289,10 +301,12 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"MRT/Preview Content\"";
-				DEVELOPMENT_TEAM = 24B56P5WZ9;
+				DEVELOPMENT_TEAM = T872JMS8WL;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = MRT/Info.plist;
+				INFOPLIST_KEY_NSBluetoothAlwaysUsageDescription = "";
+				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -303,7 +317,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = eyeryone.MRT;
+				PRODUCT_BUNDLE_IDENTIFIER = RSS.MRT;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
@@ -319,10 +333,12 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"MRT/Preview Content\"";
-				DEVELOPMENT_TEAM = 24B56P5WZ9;
+				DEVELOPMENT_TEAM = T872JMS8WL;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = MRT/Info.plist;
+				INFOPLIST_KEY_NSBluetoothAlwaysUsageDescription = "";
+				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -333,7 +349,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = eyeryone.MRT;
+				PRODUCT_BUNDLE_IDENTIFIER = RSS.MRT;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;

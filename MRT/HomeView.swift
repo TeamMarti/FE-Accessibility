@@ -6,79 +6,89 @@
 //
 
 import SwiftUI
+import CoreLocation
+import CoreBluetooth
 
 struct HomeView: View {
+    @StateObject var detectorManager = DetectorManager(bluetoothManager: CBCentralManager(), locationManager: CLLocationManager())
+    
     @State private var isShowingBottomSheet = false
     @ObservedObject var viewModel: ViewModel = ViewModel.shared
     var body: some View {
-
-        NavigationStack{
-            Spacer().frame(height: 55)
+        NavigationStack {
+            Spacer()
+                .frame(height: 55)
             
-            VStack{
+            VStack {
                 HStack {
                     VStack(alignment: .leading) {
                         
                         Text(" Hi, Maria Jonas!")
-                            .font(.system(size: 15)) .foregroundColor(Color("LightGray"))
+                            .font(.system(size: 15))
+                            .foregroundColor(Color("LightGray"))
                         
                         Spacer().frame(height: 5)
 
-                        HStack{
+                        HStack {
                             Image(systemName: "creditcard")
                                 .font(.system(size: 25))
                                 .foregroundColor(Color("Black"))
 
                             Text("RP 50.000")
-                                .fontWeight(.semibold).foregroundColor(Color("Black"))
+                                .fontWeight(.semibold)
+                                .foregroundColor(Color("Black"))
                                 .font(.system(size: 22))
                         }
                     }
                     
-                    ZStack{
+                    ZStack {
                         Rectangle()
                             .frame(width: 138, height: 34)
                             .cornerRadius(6)
                             .foregroundColor(Color("Blue"))
-
-                        HStack{
+                        
+                        HStack {
                             Image(systemName: "plus")
                                 .font(.system(size: 15))
                                 .foregroundColor(Color("White"))
                                 .fontWeight(.medium)
-
+                            
                             Text("Top Up Saldo")
                                 .foregroundColor(Color("White"))
                                 .font(.system(size: 15))
                                 .fontWeight(.medium)
                         }
-                    }.padding(.leading, 60.0)
                     }
+                    .padding(.leading, 60.0)
+                }
                 
                 Divider()
-                Spacer().frame(height: 16)
-
-                ZStack{
-                    ZStack{
+                Spacer()
+                    .frame(height: 16)
+                
+                ZStack {
+                    ZStack {
                         Image("ConfirmPaymentBackground")
                         
                         Text("Konfirmasi\nPemotongan Saldo")
                             .font(.system(size: 20))
                             .fontWeight(.semibold)
-                            .foregroundColor(Color("Black")).position(x:118, y: 43)
+                            .foregroundColor(Color("Black"))
+                            .position(x:118, y: 43)
                         
-                        Text("Saldo akan terpotong otomatis\nsaat kamu keluar dari peron\nstasiun tujuan")     .font(.system(size: 13))
+                        Text("Saldo akan terpotong otomatis\nsaat kamu keluar dari peron\nstasiun tujuan")
+                            .font(.system(size: 13))
                             .fontWeight(.regular)
                             .foregroundColor(Color("Black"))
                             .position(x:126, y: 99)
                         
                     }
-                   
-
-                    VStack{
-                            Button(action: {
+                    
+                    
+                    VStack {
+                        Button {
                             isShowingBottomSheet = true
-                        }) {
+                        } label: {
                             ZStack{
                                 Rectangle()
                                     .frame(width: 113, height: 36)
@@ -91,12 +101,14 @@ struct HomeView: View {
                                     .padding()
                                     .cornerRadius(10)
                                     .fontWeight(.semibold)
-                            }.position(x:90, y: 160)
+                            }
+                            .position(x:90, y: 160)
                         }
                     }
                 }
-
-                Spacer().frame(height: 30)
+                
+                Spacer()
+                    .frame(height: 30)
                 
                 Text("Perjalananmu Hari Ini")
                     .font(.system(size: 17))
@@ -104,7 +116,8 @@ struct HomeView: View {
                     .foregroundColor(Color("Black"))
                     .padding(.trailing, 190.0)
                 
-                Spacer().frame(height: 70)
+                Spacer()
+                    .frame(height: 70)
                 
                 Image("MartiNoTravelYet")
 
@@ -113,24 +126,22 @@ struct HomeView: View {
                     .fontWeight(.light)
                     .foregroundColor(Color("LightGray"))
 
-            }.sheet(isPresented: $isShowingBottomSheet, content: {
+            }
+            .sheet(isPresented: $isShowingBottomSheet) {
                 BottomSheetView(isShowingBottomSheet: $isShowingBottomSheet)
                     .presentationDetents([.fraction(0.5)])
-            })
+            }
             
-            Spacer().frame(height: 200)
-
+            Spacer()
+                .frame(height: 200)
         }
         .navigationBarBackButtonHidden(true)
         .onAppear{
             if viewModel.value != 1 {
                 isShowingBottomSheet = true
             }
-
         }
     }
-        
-    
 }
 
 struct HomeView_Previews: PreviewProvider {

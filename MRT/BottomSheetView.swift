@@ -58,9 +58,9 @@ struct BottomSheetView: View {
             }
             
             NavigationLink(destination: ContentView(), isActive: $isShowingBottomSheet) {
-                            EmptyView()
-                        }
-                        .hidden()
+                EmptyView()
+            }
+            .hidden()
             .background(Color.white)
             .ignoresSafeArea()
         }
