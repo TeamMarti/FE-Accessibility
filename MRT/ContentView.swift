@@ -21,7 +21,7 @@ struct ContentView: View {
                         .tabItem {
                             Image(systemName: "house")
                             Text("Beranda")
-                                
+                
                         }
                         .tag(0)
                     
