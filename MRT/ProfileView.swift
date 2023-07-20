@@ -45,7 +45,7 @@ struct ProfileView: View {
             
             HStack{
                 Text("Ubah PIN")
-                    .font(.system(size: 22))
+                    .font(.system(size: 17))
                     .foregroundColor(Color("Black"))
                     .fontWeight(.semibold)
                     .padding(.trailing, 245.0)
@@ -55,7 +55,7 @@ struct ProfileView: View {
             
             HStack{
                 Text("Log Out")
-                    .font(.system(size: 22))
+                    .font(.system(size: 17))
                     .foregroundColor(Color("Black"))
                     .fontWeight(.semibold)
                     .padding(.trailing, 260.0)
