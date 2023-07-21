@@ -10,6 +10,11 @@ import SwiftUI
 struct HomeView: View {
     @State private var isShowingBottomSheet = false
     @ObservedObject var viewModel: ViewModel = ViewModel.shared
+    
+    var isEmptySchedule: Bool = false
+    var isConfirmed: Bool = false
+    var isBluetoothOn: Bool = false
+    
     var body: some View {
 
         NavigationStack{
@@ -18,7 +23,6 @@ struct HomeView: View {
             VStack{
                 HStack {
                     VStack(alignment: .leading) {
-                        
                         Text(" Hi, Maria Jonas!")
                             .font(.system(size: 15)) .foregroundColor(Color("LightGray"))
                         
@@ -56,70 +60,95 @@ struct HomeView: View {
                     }
                 
                 Divider()
-                Spacer().frame(height: 16)
+                //Spacer().frame(height: 16)
 
-                ZStack{
-                    ZStack{
-                        Image("ConfirmPaymentBackground")
-                        
-                        Text("Konfirmasi\nPemotongan Saldo")
-                            .font(.system(size: 20))
-                            .fontWeight(.semibold)
-                            .foregroundColor(Color("Black")).position(x:118, y: 43)
-                        
-                        Text("Saldo akan terpotong otomatis\nsaat kamu keluar dari peron\nstasiun tujuan")     .font(.system(size: 13))
-                            .fontWeight(.regular)
-                            .foregroundColor(Color("Black"))
-                            .position(x:126, y: 99)
-                        
-                    }
-                   
-
-                    VStack{
-                            Button(action: {
-                            isShowingBottomSheet = true
-                        }) {
-                            ZStack{
-                                Rectangle()
-                                    .frame(width: 113, height: 36)
-                                    .cornerRadius(6)
-                                    .foregroundColor(Color("White"))
-                                
-                                Text("KONFIRMASI")
-                                    .font(.system(size: 13))
-                                    .foregroundColor(Color("Black"))
-                                    .padding()
-                                    .cornerRadius(10)
+                HStack {
+                    Circle()
+                        .frame(width: 8)
+                        .foregroundColor(.red)
+                    Image("Bluetooth")
+                    Text(isBluetoothOn ? "Nyala" : "Mati")
+                    Spacer()
+                    Text("Pastikan aktif selama perjalanan")
+                        .font(.footnote)
+                        .foregroundColor(.red)
+                    
+                }
+                .padding()
+                
+                if !isConfirmed {
+                    ZStack {
+//                        Image("ConfirmPaymentBackground")
+                        HStack {
+                            VStack(alignment: .leading) {
+                                Text("Konfirmasi\nPemotongan Saldo")
+                                    .font(.system(size: 20))
                                     .fontWeight(.semibold)
-                            }.position(x:90, y: 160)
+                                    .foregroundColor(Color("Black"))
+                                
+                                Text("Saldo akan terpotong otomatis\nsaat kamu keluar dari peron\nstasiun tujuan")
+                                    .font(.system(size: 13))
+                                    .fontWeight(.regular)
+                                    .foregroundColor(Color("Black"))
+                                    Button(action: {
+                                    isShowingBottomSheet = true
+                                }) {
+                                    Text("KONFIRMASI")
+                                        .font(.system(size: 13))
+                                        .foregroundColor(Color("Black"))
+                                        .padding(.vertical,12)
+                                        .padding(.horizontal)
+                                        .cornerRadius(10)
+                                        .fontWeight(.semibold)
+                                        .background(Color("White"))
+                                        .cornerRadius(6)
+                                }
+                            }
+                            Image("MartiConfirmPayment")
                         }
+                        .padding()
+                        .background(
+                            Color("Blue").opacity(0.75)
+                        )
+                        .cornerRadius(12)
+
                     }
                 }
-
-                Spacer().frame(height: 30)
                 
-                Text("Perjalananmu Hari Ini")
-                    .font(.system(size: 17))
-                    .fontWeight(.semibold)
-                    .foregroundColor(Color("Black"))
-                    .padding(.trailing, 190.0)
+                HStack {
+                    Text("Perjalananmu Hari Ini")
+                        .font(.title3)
+                        .fontWeight(.semibold)
+                        .foregroundColor(Color("DarkBlue"))
+                    Spacer()
+                }
+                .padding()
                 
-                Spacer().frame(height: 70)
                 
-                Image("MartiNoTravelYet")
+                
+                if !isEmptySchedule {
+                    ScrollView {
+                        TravelScheduleView()
+                    }
+                }
+                else {
+                    Spacer().frame(height: 70)
+                    
+                    Image("MartiNoTravelYet")
 
-                Text("Hari ini kamu belum ada perjalanan dengan Swee")
-                    .font(.system(size: 13))
-                    .fontWeight(.light)
-                    .foregroundColor(Color("LightGray"))
-
-            }.sheet(isPresented: $isShowingBottomSheet, content: {
+                    Text("Hari ini kamu belum ada perjalanan dengan Swee")
+                        .font(.system(size: 13))
+                        .fontWeight(.light)
+                        .foregroundColor(Color("LightGray"))
+                }
+            }
+            .sheet(isPresented: $isShowingBottomSheet, content: {
                 BottomSheetView(isShowingBottomSheet: $isShowingBottomSheet)
                     .presentationDetents([.fraction(0.5)])
             })
             
-            Spacer().frame(height: 200)
-
+            //Spacer().frame(height: 200)
+            
         }
         .navigationBarBackButtonHidden(true)
         .onAppear{

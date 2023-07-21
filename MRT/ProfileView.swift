@@ -62,7 +62,8 @@ struct ProfileView: View {
                 
                 Image(systemName: "chevron.right")
             }
-            Spacer().frame(height:280)
+//            Spacer().frame(height:280)
+            Spacer()
         }
     }
 }

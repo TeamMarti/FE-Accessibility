@@ -20,8 +20,7 @@ struct ContentView: View {
                     HomeView()
                         .tabItem {
                             Image(systemName: "house")
-                            Text("Beranda")
-                
+                            Text("Beranda")  
                         }
                         .tag(0)
                     
@@ -44,7 +43,6 @@ struct ContentView: View {
         .accentColor(Color("DarkBlue"))
         
         .toolbarColorScheme(.light, for: .tabBar)
-            
             
     }
 }
