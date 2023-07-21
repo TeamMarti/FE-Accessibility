@@ -152,10 +152,9 @@ struct HomeView: View {
             .sheet(isPresented: $isShowingBottomSheet, content: {
                 BottomSheetView(isShowingBottomSheet: $isShowingBottomSheet)
                     .presentationDetents([.fraction(0.5)])
-            }
+            })
             
             //Spacer().frame(height: 200)
-            
         }
         .navigationBarBackButtonHidden(true)
         .onAppear{
