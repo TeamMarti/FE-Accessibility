@@ -38,10 +38,9 @@ class DetectorManager: NSObject, ObservableObject, CBCentralManagerDelegate, CLL
         self.locationManager = locationManager
         self.locationManager!.delegate = self
         self.locationManager!.requestWhenInUseAuthorization()
-        getGates()
     }
     
-    func getGates() {
+    func getGates(completion: @escaping () -> Void) {
         guard let url = URL(string: "https://raw.githubusercontent.com/TeamMarti/marti-temp-data/main/GateDatas") else { return }
         
         let task = URLSession.shared.dataTask(with: url) { data, response, error in
@@ -58,6 +57,7 @@ class DetectorManager: NSObject, ObservableObject, CBCentralManagerDelegate, CLL
             do {
                 let decoder = JSONDecoder()
                 self.gates = try decoder.decode([String: GateData].self, from: data)
+                completion()
             }
             catch {
                 print(error)
@@ -78,11 +78,18 @@ class DetectorManager: NSObject, ObservableObject, CBCentralManagerDelegate, CLL
         }
     }
     
+    // MARK: Receiver
     func locationManagerDidChangeAuthorization(_ manager: CLLocationManager) {
         if manager.authorizationStatus == .authorizedWhenInUse {
             if CLLocationManager.isMonitoringAvailable(for: CLBeaconRegion.self) {
                 if CLLocationManager.isRangingAvailable() {
-                    startMonitoring()
+                    if gates.isEmpty {
+                        getGates() {
+                            self.startMonitoring()
+                        }
+                    } else {
+                        startMonitoring()
+                    }
                 }
             }
         }
@@ -99,7 +106,6 @@ class DetectorManager: NSObject, ObservableObject, CBCentralManagerDelegate, CLL
 //        for gate in gates {
 //            let uuid = UUID(uuidString: gate.key)!
 //            let beaconConstraint = CLBeaconIdentityConstraint(uuid: uuid, major: localBeaconMajor, minor: localBeaconMinor)
-//
 //            locationManager?.startRangingBeacons(satisfying: beaconConstraint)
 //        }
     }
@@ -115,7 +121,6 @@ class DetectorManager: NSObject, ObservableObject, CBCentralManagerDelegate, CLL
 //        for gate in gates {
 //            let uuid = UUID(uuidString: gate.key)!
 //            let beaconConstraint = CLBeaconIdentityConstraint(uuid: uuid, major: localBeaconMajor, minor: localBeaconMinor)
-//
 //            locationManager?.stopRangingBeacons(satisfying: beaconConstraint)
 //        }
     }
@@ -150,20 +155,18 @@ class DetectorManager: NSObject, ObservableObject, CBCentralManagerDelegate, CLL
         }
     }
     
-    func locationManager(_ manager: CLLocationManager, didRangeBeacons beacons: [CLBeacon], in region: CLBeaconRegion) {
+    func locationManager(_ manager: CLLocationManager, didRange beacons: [CLBeacon], satisfying beaconConstraint: CLBeaconIdentityConstraint) {
+        print("DidRange satisfying", beaconConstraint.uuid)
         for beacon in beacons {
-            print("Masuk for in")
             let beaconUUID = beacon.uuid.uuidString
             let rssi = beacon.rssi
             beaconData[beaconUUID] = rssi
             print(beaconData)
         }
-        
         updateMaxRSSI()
     }
     
-    
-    
+    // MARK: Beacon
     func initLocalBeacon() {
         if localBeacon != nil {
             stopLocalBeacon()
@@ -189,9 +192,4 @@ class DetectorManager: NSObject, ObservableObject, CBCentralManagerDelegate, CLL
             peripheralManager.stopAdvertising()
         }
     }
-}
-
-enum BluetoothStatus {
-    case mati
-    case nyala
 }

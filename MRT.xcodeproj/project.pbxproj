@@ -19,6 +19,7 @@
 		D6C5A86F2A692BB900832EA9 /* AlarmManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6C5A86E2A692BB900832EA9 /* AlarmManager.swift */; };
 		D6C5A8712A692BC300832EA9 /* DetectorManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6C5A8702A692BC300832EA9 /* DetectorManager.swift */; };
 		D6C5A8732A692EA300832EA9 /* GateData.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6C5A8722A692EA300832EA9 /* GateData.swift */; };
+		D6C5A8752A697C6F00832EA9 /* BluetoothStatus.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6C5A8742A697C6F00832EA9 /* BluetoothStatus.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -36,6 +37,7 @@
 		D6C5A86E2A692BB900832EA9 /* AlarmManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlarmManager.swift; sourceTree = "<group>"; };
 		D6C5A8702A692BC300832EA9 /* DetectorManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetectorManager.swift; sourceTree = "<group>"; };
 		D6C5A8722A692EA300832EA9 /* GateData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GateData.swift; sourceTree = "<group>"; };
+		D6C5A8742A697C6F00832EA9 /* BluetoothStatus.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BluetoothStatus.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -81,6 +83,7 @@
 				3519BAC12A61424300F47BAA /* Assets.xcassets */,
 				3519BAC32A61424300F47BAA /* Preview Content */,
 				D6C5A8722A692EA300832EA9 /* GateData.swift */,
+				D6C5A8742A697C6F00832EA9 /* BluetoothStatus.swift */,
 			);
 			path = MRT;
 			sourceTree = "<group>";
@@ -169,6 +172,7 @@
 				35D5E69E2A62FD69002E4F13 /* ShortCut.swift in Sources */,
 				3519BABE2A61424200F47BAA /* MRTApp.swift in Sources */,
 				35D5E6BC2A65869B002E4F13 /* HomeView.swift in Sources */,
+				D6C5A8752A697C6F00832EA9 /* BluetoothStatus.swift in Sources */,
 				D6C5A8712A692BC300832EA9 /* DetectorManager.swift in Sources */,
 				D6C5A86F2A692BB900832EA9 /* AlarmManager.swift in Sources */,
 				35D5E6BA2A658626002E4F13 /* ProfileView.swift in Sources */,
