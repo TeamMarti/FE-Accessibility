@@ -19,6 +19,10 @@
 		D6C5A8772A6A669C00832EA9 /* TravelScheduleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6C5A8762A6A669C00832EA9 /* TravelScheduleView.swift */; };
 		D6C5A8792A6A66B400832EA9 /* SortButtonView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6C5A8782A6A66B400832EA9 /* SortButtonView.swift */; };
 		D6C5A87B2A6A66DB00832EA9 /* FilterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6C5A87A2A6A66DB00832EA9 /* FilterView.swift */; };
+		D6C5A86F2A692BB900832EA9 /* AlarmManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6C5A86E2A692BB900832EA9 /* AlarmManager.swift */; };
+		D6C5A8712A692BC300832EA9 /* DetectorManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6C5A8702A692BC300832EA9 /* DetectorManager.swift */; };
+		D6C5A8732A692EA300832EA9 /* GateData.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6C5A8722A692EA300832EA9 /* GateData.swift */; };
+		D6C5A8752A697C6F00832EA9 /* BluetoothStatus.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6C5A8742A697C6F00832EA9 /* BluetoothStatus.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -36,6 +40,10 @@
 		D6C5A8762A6A669C00832EA9 /* TravelScheduleView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TravelScheduleView.swift; sourceTree = "<group>"; };
 		D6C5A8782A6A66B400832EA9 /* SortButtonView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SortButtonView.swift; sourceTree = "<group>"; };
 		D6C5A87A2A6A66DB00832EA9 /* FilterView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilterView.swift; sourceTree = "<group>"; };
+		D6C5A86E2A692BB900832EA9 /* AlarmManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlarmManager.swift; sourceTree = "<group>"; };
+		D6C5A8702A692BC300832EA9 /* DetectorManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetectorManager.swift; sourceTree = "<group>"; };
+		D6C5A8722A692EA300832EA9 /* GateData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GateData.swift; sourceTree = "<group>"; };
+		D6C5A8742A697C6F00832EA9 /* BluetoothStatus.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BluetoothStatus.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -79,8 +87,12 @@
 				D6C5A8762A6A669C00832EA9 /* TravelScheduleView.swift */,
 				D6C5A8782A6A66B400832EA9 /* SortButtonView.swift */,
 				D6C5A87A2A6A66DB00832EA9 /* FilterView.swift */,
+				D6C5A86E2A692BB900832EA9 /* AlarmManager.swift */,
+				D6C5A8702A692BC300832EA9 /* DetectorManager.swift */,
 				3519BAC12A61424300F47BAA /* Assets.xcassets */,
 				3519BAC32A61424300F47BAA /* Preview Content */,
+				D6C5A8722A692EA300832EA9 /* GateData.swift */,
+				D6C5A8742A697C6F00832EA9 /* BluetoothStatus.swift */,
 			);
 			path = MRT;
 			sourceTree = "<group>";
@@ -163,12 +175,16 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D6C5A8732A692EA300832EA9 /* GateData.swift in Sources */,
 				3519BAC02A61424200F47BAA /* ContentView.swift in Sources */,
 				D6C5A8772A6A669C00832EA9 /* TravelScheduleView.swift in Sources */,
 				35D5E6B82A65860D002E4F13 /* HistoryView.swift in Sources */,
 				35D5E69E2A62FD69002E4F13 /* ShortCut.swift in Sources */,
 				3519BABE2A61424200F47BAA /* MRTApp.swift in Sources */,
 				35D5E6BC2A65869B002E4F13 /* HomeView.swift in Sources */,
+				D6C5A8752A697C6F00832EA9 /* BluetoothStatus.swift in Sources */,
+				D6C5A8712A692BC300832EA9 /* DetectorManager.swift in Sources */,
+				D6C5A86F2A692BB900832EA9 /* AlarmManager.swift in Sources */,
 				35D5E6BA2A658626002E4F13 /* ProfileView.swift in Sources */,
 				3519BACC2A6146EA00F47BAA /* BottomSheetView.swift in Sources */,
 				D6C5A87B2A6A66DB00832EA9 /* FilterView.swift in Sources */,
@@ -305,6 +321,8 @@
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = MRT/Info.plist;
+				INFOPLIST_KEY_NSBluetoothAlwaysUsageDescription = "";
+				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -335,6 +353,8 @@
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = MRT/Info.plist;
+				INFOPLIST_KEY_NSBluetoothAlwaysUsageDescription = "";
+				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;

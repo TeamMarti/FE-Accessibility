@@ -6,8 +6,12 @@
 //
 
 import SwiftUI
+import CoreLocation
+import CoreBluetooth
 
 struct HomeView: View {
+    @StateObject var detectorManager = DetectorManager(bluetoothManager: CBCentralManager(), locationManager: CLLocationManager())
+    
     @State private var isShowingBottomSheet = false
     @ObservedObject var viewModel: ViewModel = ViewModel.shared
     
@@ -16,48 +20,51 @@ struct HomeView: View {
     var isBluetoothOn: Bool = false
     
     var body: some View {
-
-        NavigationStack{
-            Spacer().frame(height: 55)
+        NavigationStack {
+            Spacer()
+                .frame(height: 55)
             
-            VStack{
+            VStack {
                 HStack {
                     VStack(alignment: .leading) {
                         Text(" Hi, Maria Jonas!")
-                            .font(.system(size: 15)) .foregroundColor(Color("LightGray"))
+                            .font(.system(size: 15))
+                            .foregroundColor(Color("LightGray"))
                         
                         Spacer().frame(height: 5)
 
-                        HStack{
+                        HStack {
                             Image(systemName: "creditcard")
                                 .font(.system(size: 25))
                                 .foregroundColor(Color("Black"))
 
                             Text("RP 50.000")
-                                .fontWeight(.semibold).foregroundColor(Color("Black"))
+                                .fontWeight(.semibold)
+                                .foregroundColor(Color("Black"))
                                 .font(.system(size: 22))
                         }
                     }
                     
-                    ZStack{
+                    ZStack {
                         Rectangle()
                             .frame(width: 138, height: 34)
                             .cornerRadius(6)
                             .foregroundColor(Color("Blue"))
-
-                        HStack{
+                        
+                        HStack {
                             Image(systemName: "plus")
                                 .font(.system(size: 15))
                                 .foregroundColor(Color("White"))
                                 .fontWeight(.medium)
-
+                            
                             Text("Top Up Saldo")
                                 .foregroundColor(Color("White"))
                                 .font(.system(size: 15))
                                 .fontWeight(.medium)
                         }
-                    }.padding(.leading, 60.0)
                     }
+                    .padding(.leading, 60.0)
+                }
                 
                 Divider()
                 //Spacer().frame(height: 16)
@@ -145,7 +152,7 @@ struct HomeView: View {
             .sheet(isPresented: $isShowingBottomSheet, content: {
                 BottomSheetView(isShowingBottomSheet: $isShowingBottomSheet)
                     .presentationDetents([.fraction(0.5)])
-            })
+            }
             
             //Spacer().frame(height: 200)
             
@@ -155,11 +162,8 @@ struct HomeView: View {
             if viewModel.value != 1 {
                 isShowingBottomSheet = true
             }
-
         }
     }
-        
-    
 }
 
 struct HomeView_Previews: PreviewProvider {
