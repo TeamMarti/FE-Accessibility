@@ -8,6 +8,9 @@
 import SwiftUI
 
 struct ProfileView: View {
+    @State var userName: String = ""
+    @State var userEmail: String = ""
+    
     var body: some View {
         VStack{
             Text("Profil")
@@ -21,12 +24,12 @@ struct ProfileView: View {
             
             Image("Profil")
             
-            Text("John Doe")
+            Text(userName)
                 .font(.system(size: 22))
                 .foregroundColor(Color("Black"))
                 .fontWeight(.semibold)
             
-            PlainText(text: "john.doe@gmail.com")
+            PlainText(text: userEmail)
                 .font(.system(size: 17))
                 .foregroundColor(Color("Black"))
                 .fontWeight(.regular)
@@ -64,6 +67,10 @@ struct ProfileView: View {
             }
 //            Spacer().frame(height:280)
             Spacer()
+        }
+        .onAppear {
+            userName = UserDefaults.standard.string(forKey: "userName") ?? "John Doe"
+            userEmail = UserDefaults.standard.string(forKey: "userEmail") ?? "john.doe@gmail.com"
         }
     }
 }

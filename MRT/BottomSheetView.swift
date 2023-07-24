@@ -40,9 +40,10 @@ struct BottomSheetView: View {
                 
                 Spacer().frame(height: 25)
                 
-                Button(action: {
-              
-                }) {
+                Button {
+                    isShowingBottomSheet = false
+                    UserDefaults.standard.set(true, forKey: "isConfirmed")
+                } label: {
                     ZStack{
                         Rectangle()
                             .frame(width: 156, height: 44)

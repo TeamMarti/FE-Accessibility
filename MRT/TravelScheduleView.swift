@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct TravelScheduleView: View {
-    var isFinished: Bool = true
+    @State var isFinished: Bool = false
     
     var origin: String = "Lebak Bulus"
     var destination: String = "Dukuh Atas"
@@ -74,6 +74,13 @@ struct TravelScheduleView: View {
                 .stroke(Color.gray, lineWidth: 1)
         }
         .padding(.horizontal)
+        .onAppear {
+            if UserDefaults.standard.integer(forKey: "tripStatus") == 1 {
+                isFinished = false
+            } else {
+                isFinished = true
+            }
+        }
     }
 }
 

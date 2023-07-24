@@ -10,7 +10,8 @@ import CoreBluetooth
 import AVFoundation
 
 class DetectorManager: NSObject, ObservableObject, CBCentralManagerDelegate, CLLocationManagerDelegate, CBPeripheralManagerDelegate {
-    @Published var bluetoothStatus: BluetoothStatus = .mati
+//class DetectorManager: NSObject, ObservableObject, CLLocationManagerDelegate, CBPeripheralManagerDelegate {
+    @Published var isBluetoothOn: Bool = true
     
     var bluetoothManager: CBCentralManager?
     var locationManager: CLLocationManager?
@@ -21,7 +22,7 @@ class DetectorManager: NSObject, ObservableObject, CBCentralManagerDelegate, CLL
     let alarmHelper = AlarmManager()
     
     var beaconData: [String: Int] = [:]
-    var selectedBeaconID: String = ""
+    var selectedBeaconID: String = "0368D30E-BC09-4583-BFB6-77089872AA93"
     let localBeaconMajor: CLBeaconMajorValue = 12
     let localBeaconMinor: CLBeaconMinorValue = 34
     let secondaryMajor: CLBeaconMajorValue = 56
@@ -29,13 +30,14 @@ class DetectorManager: NSObject, ObservableObject, CBCentralManagerDelegate, CLL
     let identifier = "MARTI Beacon"
     
     var gates: [String: GateData] = [:]
-    var isPaid: Bool = true
     
-    init(bluetoothManager: CBCentralManager, locationManager: CLLocationManager) {
+    var isBalanceEnough: Bool = false
+    
+    override init() {
         super.init()
-        self.bluetoothManager = bluetoothManager
+        self.bluetoothManager = CBCentralManager()
         self.bluetoothManager?.delegate = self
-        self.locationManager = locationManager
+        self.locationManager = CLLocationManager()
         self.locationManager!.delegate = self
         self.locationManager!.requestWhenInUseAuthorization()
     }
@@ -57,6 +59,10 @@ class DetectorManager: NSObject, ObservableObject, CBCentralManagerDelegate, CLL
             do {
                 let decoder = JSONDecoder()
                 self.gates = try decoder.decode([String: GateData].self, from: data)
+                self.gates = [
+                    "CDC83B22-72D9-4D25-A72B-4254E13F9DD9": GateData(station: "FWI", gate: 1),
+                    "934C3403-9C39-42E7-A88F-EDF7106DB211": GateData(station: "LBG", gate: 1)
+                ]
                 completion()
             }
             catch {
@@ -70,11 +76,11 @@ class DetectorManager: NSObject, ObservableObject, CBCentralManagerDelegate, CLL
     func centralManagerDidUpdateState(_ central: CBCentralManager) {
         switch central.state {
         case .poweredOn:
-            bluetoothStatus = .nyala
+            isBluetoothOn = true
         case .poweredOff:
-            bluetoothStatus = .mati
+            isBluetoothOn = false
         default:
-            bluetoothStatus = .mati
+            isBluetoothOn = false
         }
     }
     
@@ -97,50 +103,47 @@ class DetectorManager: NSObject, ObservableObject, CBCentralManagerDelegate, CLL
 
     func startMonitoring() {
         print("Start Monitoring")
-        let beaconIDs = ["93BF79B4-90CC-4AFA-8740-2F7FF4FA4934", "2A03208F-1C94-4441-A479-9F09D04F8260"]
-        for i in 0...1 {
-            let uuid = UUID(uuidString: beaconIDs[i])!
+        for gate in gates {
+            print(gate.key)
+            let uuid = UUID(uuidString: gate.key)!
             let beaconConstraint = CLBeaconIdentityConstraint(uuid: uuid, major: localBeaconMajor, minor: localBeaconMinor)
             locationManager?.startRangingBeacons(satisfying: beaconConstraint)
         }
-//        for gate in gates {
-//            let uuid = UUID(uuidString: gate.key)!
-//            let beaconConstraint = CLBeaconIdentityConstraint(uuid: uuid, major: localBeaconMajor, minor: localBeaconMinor)
-//            locationManager?.startRangingBeacons(satisfying: beaconConstraint)
-//        }
     }
     
     func stopMonitoring() {
         print("Stop Monitoring")
-        let beaconIDs = ["93BF79B4-90CC-4AFA-8740-2F7FF4FA4934", "2A03208F-1C94-4441-A479-9F09D04F8260"]
-        for i in 0...1 {
-            let uuid = UUID(uuidString: beaconIDs[i])!
+        for gate in gates {
+            let uuid = UUID(uuidString: gate.key)!
             let beaconConstraint = CLBeaconIdentityConstraint(uuid: uuid, major: localBeaconMajor, minor: localBeaconMinor)
             locationManager?.stopRangingBeacons(satisfying: beaconConstraint)
         }
-//        for gate in gates {
-//            let uuid = UUID(uuidString: gate.key)!
-//            let beaconConstraint = CLBeaconIdentityConstraint(uuid: uuid, major: localBeaconMajor, minor: localBeaconMinor)
-//            locationManager?.stopRangingBeacons(satisfying: beaconConstraint)
-//        }
     }
     
     func update(_ rssi: Int) {
-        print(rssi)
-        if rssi >= -30 && isPaid {
-            let money = 50000
-            if money >= 10000 {
-                initLocalBeacon()
-            }
-            else {
-                if !alarmHelper.alarmRinging {
-                    alarmHelper.playWarningSound()
+        if UserDefaults.standard.bool(forKey: "isConfirmed") {
+            if rssi >= -40 && rssi != 0{
+                if isBalanceEnough {
+                    initLocalBeacon()
+                    if UserDefaults.standard.integer(forKey: "tripStatus") == 0 {
+                        UserDefaults.standard.set(1, forKey: "tripStatus")
+                        UserDefaults.standard.set(true, forKey: "justChecked")
+                    } else if !UserDefaults.standard.bool(forKey: "justChecked") {
+                        UserDefaults.standard.set(2, forKey: "tripStatus")
+                    }
+                } else {
+                    if !alarmHelper.alarmRinging {
+                        alarmHelper.playWarningSound()
+                    }
                 }
+            } else {
+                if localBeacon != nil {
+                    stopLocalBeacon()
+                }
+                UserDefaults.standard.set(false, forKey: "justChecked")
             }
-        } else if rssi <= -60 {
-            if localBeacon != nil {
-                stopLocalBeacon()
-            }
+        } else {
+            print("Haven't Confirmed")
         }
     }
     
@@ -148,7 +151,6 @@ class DetectorManager: NSObject, ObservableObject, CBCentralManagerDelegate, CLL
         if let maxRSSI = beaconData.values.max(),
            let beaconID = beaconData.first(where: { $0.value == maxRSSI })?.key {
             self.selectedBeaconID = beaconID
-            
             update(maxRSSI)
         } else {
             self.selectedBeaconID = "NONE"
@@ -165,6 +167,16 @@ class DetectorManager: NSObject, ObservableObject, CBCentralManagerDelegate, CLL
         }
         updateMaxRSSI()
     }
+    
+//    func locationManager(_ manager: CLLocationManager, didRangeBeacons beacons: [CLBeacon], in region: CLBeaconRegion) {
+//        for beacon in beacons {
+//            let beaconUUID = beacon.uuid.uuidString
+//            let rssi = beacon.rssi
+//            beaconData[beaconUUID] = rssi
+//            print(beaconData)
+//        }
+//        updateMaxRSSI()
+//    }
     
     // MARK: Beacon
     func initLocalBeacon() {
@@ -185,6 +197,7 @@ class DetectorManager: NSObject, ObservableObject, CBCentralManagerDelegate, CLL
     }
     
     func peripheralManagerDidUpdateState(_ peripheral: CBPeripheralManager) {
+        print(peripheral.state)
         if peripheral.state == .poweredOn {
             peripheralManager.startAdvertising(beaconPeripheralData as? [String: Any])
         }
